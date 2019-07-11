@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 # Create your models here.
-class UserprofileManager(BaseUserManager):
+class UserProfileManager(BaseUserManager):
     """Helps Django work with our custom user model."""
 
     def create_user(self, email, name, password=None):
@@ -32,7 +32,7 @@ class UserprofileManager(BaseUserManager):
 
         return user
 
-class Userprofile(AbstractBaseUser,PermissionsMixin):
+class UserProfile(AbstractBaseUser,PermissionsMixin):
     """Represents a "user profile" inside our system."""
 
     email = models.EmailField(max_length=255, unique=True)
@@ -40,7 +40,7 @@ class Userprofile(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = UserprofileManager()
+    objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
