@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
 from . import models
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import filters
-
 from . import serializers
 from rest_framework import status
 from . import permissions
@@ -116,3 +117,13 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.UpdateOwnProfile,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
+
+class LoginViewSet(viewsets.ViewSet):
+    """Checks email and password and retuns an auth token."""
+
+    serializer_class = AuthTokenSerializer
+
+    def create(self, request):
+        """Use the ObtainAuthToken APIView to vlaidate and create a token."""
+
+        return ObtainAuthToken().post(request)
